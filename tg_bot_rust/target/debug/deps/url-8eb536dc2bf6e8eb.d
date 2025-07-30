@@ -1,0 +1,11 @@
+/Users/ONLYPROGRAMMING/Desktop/Tg_bot/tg_bot_rust/target/debug/deps/url-8eb536dc2bf6e8eb.d: /Users/ONLYPROGRAMMING/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/url-2.5.4/src/lib.rs /Users/ONLYPROGRAMMING/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/url-2.5.4/src/host.rs /Users/ONLYPROGRAMMING/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/url-2.5.4/src/origin.rs /Users/ONLYPROGRAMMING/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/url-2.5.4/src/parser.rs /Users/ONLYPROGRAMMING/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/url-2.5.4/src/path_segments.rs /Users/ONLYPROGRAMMING/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/url-2.5.4/src/slicing.rs /Users/ONLYPROGRAMMING/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/url-2.5.4/src/quirks.rs
+
+/Users/ONLYPROGRAMMING/Desktop/Tg_bot/tg_bot_rust/target/debug/deps/liburl-8eb536dc2bf6e8eb.rmeta: /Users/ONLYPROGRAMMING/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/url-2.5.4/src/lib.rs /Users/ONLYPROGRAMMING/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/url-2.5.4/src/host.rs /Users/ONLYPROGRAMMING/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/url-2.5.4/src/origin.rs /Users/ONLYPROGRAMMING/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/url-2.5.4/src/parser.rs /Users/ONLYPROGRAMMING/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/url-2.5.4/src/path_segments.rs /Users/ONLYPROGRAMMING/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/url-2.5.4/src/slicing.rs /Users/ONLYPROGRAMMING/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/url-2.5.4/src/quirks.rs
+
+/Users/ONLYPROGRAMMING/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/url-2.5.4/src/lib.rs:
+/Users/ONLYPROGRAMMING/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/url-2.5.4/src/host.rs:
+/Users/ONLYPROGRAMMING/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/url-2.5.4/src/origin.rs:
+/Users/ONLYPROGRAMMING/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/url-2.5.4/src/parser.rs:
+/Users/ONLYPROGRAMMING/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/url-2.5.4/src/path_segments.rs:
+/Users/ONLYPROGRAMMING/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/url-2.5.4/src/slicing.rs:
+/Users/ONLYPROGRAMMING/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/url-2.5.4/src/quirks.rs:
