@@ -2,4 +2,4 @@
 command = "cargo build --release"
 
 [start]
-command = "./target/debug/tg_bot_rust"
+command = "./target/release/tg_bot_rust"
