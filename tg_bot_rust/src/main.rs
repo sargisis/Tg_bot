@@ -67,7 +67,7 @@ async fn message_handler(
         if text == "/start" {
             let mut state = state.lock().await;
 
-            // Удаление старых сообщений
+            // Удаляем предыдущие сообщения
             if let Some(ids) = state.get(&msg.chat.id) {
                 for &id in ids {
                     let _ = bot.delete_message(msg.chat.id, id).await;
@@ -75,34 +75,40 @@ async fn message_handler(
             }
             state.insert(msg.chat.id, Vec::new());
 
-            // Отправляем баннер (если есть)
-            let banner_path = Path::new("assets/welcome.jpg");
-            if banner_path.exists() {
-                let photo = InputFile::file(banner_path);
-                let banner = bot.send_photo(msg.chat.id, photo).await?;
-                state.get_mut(&msg.chat.id).unwrap().push(banner.id);
-            }
-
-            // Текст приветствия
-            let welcome_text = "Привет, друг!  
-Ты оказался в ReMind-архиве — месте, где мы собираем книги, исчезнувшие с полок, но не из памяти.
-
-В этом боте ты сможешь:  
-1. 📚 Приобрести свою книгу.  
-2. 🕵️‍♂️ Открой то, что прячут.
-
-Нажимай на кнопку ниже и наслаждайся книгами ⬇️";
-
+            // Кнопка "Перейти к книгам"
             let keyboard = InlineKeyboardMarkup::new(vec![vec![
                 InlineKeyboardButton::callback("📂 Перейти к книгам", "ready"),
             ]]);
 
-            let sent_msg = bot
-                .send_message(msg.chat.id, welcome_text)
-                .reply_markup(keyboard)
-                .await?;
+            // Текст приветствия
+            let welcome_caption = "<b>Привет, друг!</b>\n\
+Ты оказался в ReMind-архиве — месте, где мы собираем книги, исчезнувшие с полок, но не из памяти.\n\n\
+<b>В этом боте ты сможешь:</b>\n\
+1. <b>Приобрести свою книгу.</b> Не по жанру. Не по тренду. А по ощущению.\n\
+2. <b>Открой то, что прячут.</b> Мы сохраняем тексты, которые удалили, забыли или пытались спрятать.\n\n\
+Нажимай на кнопку ниже и наслаждайся книгами ⬇️";
 
-            state.get_mut(&msg.chat.id).unwrap().push(sent_msg.id);
+            // Путь к картинке
+            let banner_path = Path::new("assets/welcome.jpg");
+
+            if banner_path.exists() {
+                let photo = InputFile::file(banner_path);
+                let sent_msg = bot
+                    .send_photo(msg.chat.id, photo)
+                    .caption(welcome_caption)
+                    .parse_mode(teloxide::types::ParseMode::Html)
+                    .reply_markup(keyboard)
+                    .await?;
+
+                state.get_mut(&msg.chat.id).unwrap().push(sent_msg.id);
+            } else {
+                let fallback = bot
+                    .send_message(msg.chat.id, "Добро пожаловать! (но баннер не найден)")
+                    .reply_markup(keyboard)
+                    .await?;
+
+                state.get_mut(&msg.chat.id).unwrap().push(fallback.id);
+            }
         }
     }
     Ok(())
