@@ -27,17 +27,23 @@ async fn main() {
     let addr = SocketAddr::from(([0, 0, 0, 0], 8080));
     let url = Url::parse(&env::var("WEBHOOK_URL").expect("WEBHOOK_URL must be set")).unwrap();
 
-    let listener = webhooks::axum(bot.clone(), Options::new(addr, url)).await.unwrap();
+    let listener = webhooks::axum(bot.clone(), Options::new(addr, url))
+        .await
+        .expect("Не удалось запустить webhook listener");
 
     let handler: UpdateHandler<teloxide::RequestError> = dptree::entry()
-    .branch(Update::filter_message().endpoint(message_handler))
-    .branch(Update::filter_callback_query().endpoint(callback_handler));
+        .branch(Update::filter_message().endpoint(message_handler))
+        .branch(Update::filter_callback_query().endpoint(callback_handler));
+
+    // ✅ ЭТО важно
+    let shared_state = std::sync::Arc::new(tokio::sync::Mutex::new(ChatState::new()));
 
     Dispatcher::builder(bot, handler)
-    .enable_ctrlc_handler()
-    .build()
-    .dispatch_with_listener(listener, LoggingErrorHandler::with_custom_text("Ошибка в боте"))
-    .await;
+        .dependencies(dptree::deps![shared_state])
+        .enable_ctrlc_handler()
+        .build()
+        .dispatch_with_listener(listener, LoggingErrorHandler::with_custom_text("Ошибка в боте"))
+        .await;
 }
 
 fn main_keyboard() -> InlineKeyboardMarkup {
