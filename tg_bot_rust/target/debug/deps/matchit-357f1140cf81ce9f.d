@@ -1,0 +1,11 @@
+/Users/ONLYPROGRAMMING/Desktop/Tg_bot/tg_bot_rust/target/debug/deps/matchit-357f1140cf81ce9f.d: /Users/ONLYPROGRAMMING/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/matchit-0.7.3/src/lib.rs /Users/ONLYPROGRAMMING/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/matchit-0.7.3/src/error.rs /Users/ONLYPROGRAMMING/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/matchit-0.7.3/src/params.rs /Users/ONLYPROGRAMMING/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/matchit-0.7.3/src/router.rs /Users/ONLYPROGRAMMING/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/matchit-0.7.3/src/tree.rs
+
+/Users/ONLYPROGRAMMING/Desktop/Tg_bot/tg_bot_rust/target/debug/deps/libmatchit-357f1140cf81ce9f.rlib: /Users/ONLYPROGRAMMING/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/matchit-0.7.3/src/lib.rs /Users/ONLYPROGRAMMING/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/matchit-0.7.3/src/error.rs /Users/ONLYPROGRAMMING/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/matchit-0.7.3/src/params.rs /Users/ONLYPROGRAMMING/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/matchit-0.7.3/src/router.rs /Users/ONLYPROGRAMMING/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/matchit-0.7.3/src/tree.rs
+
+/Users/ONLYPROGRAMMING/Desktop/Tg_bot/tg_bot_rust/target/debug/deps/libmatchit-357f1140cf81ce9f.rmeta: /Users/ONLYPROGRAMMING/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/matchit-0.7.3/src/lib.rs /Users/ONLYPROGRAMMING/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/matchit-0.7.3/src/error.rs /Users/ONLYPROGRAMMING/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/matchit-0.7.3/src/params.rs /Users/ONLYPROGRAMMING/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/matchit-0.7.3/src/router.rs /Users/ONLYPROGRAMMING/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/matchit-0.7.3/src/tree.rs
+
+/Users/ONLYPROGRAMMING/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/matchit-0.7.3/src/lib.rs:
+/Users/ONLYPROGRAMMING/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/matchit-0.7.3/src/error.rs:
+/Users/ONLYPROGRAMMING/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/matchit-0.7.3/src/params.rs:
+/Users/ONLYPROGRAMMING/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/matchit-0.7.3/src/router.rs:
+/Users/ONLYPROGRAMMING/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/matchit-0.7.3/src/tree.rs:

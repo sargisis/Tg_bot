@@ -1,30 +1,43 @@
-use teloxide::prelude::*;
-use teloxide::types::{InlineKeyboardButton, InlineKeyboardMarkup, InputFile, MessageId};
+use teloxide::{prelude::*, update_listeners::webhooks};
+use teloxide::update_listeners::webhooks::Options;
+use teloxide::types::InputFile;
+use std::net::SocketAddr;
 use std::path::Path;
-use std::collections::HashMap;
+use teloxide::types::InlineKeyboardButton;
+use teloxide::types::InlineKeyboardMarkup;
+use std::env;
 use dotenv::dotenv;
+use std::collections::HashMap;
+use teloxide::types::MessageId;
+use teloxide::error_handlers::LoggingErrorHandler;
+use teloxide::dispatching::UpdateHandler;
+use url::Url;
 
-type ChatState = HashMap<ChatId, Vec<MessageId>>;
+type ChatState = HashMap<ChatId , Vec<MessageId>>;
 
 #[tokio::main]
 async fn main() {
     dotenv().ok();
     pretty_env_logger::init();
-    log::info!("✅ Бот запущен...");
+
+    log::info!("Запуск бота с webhook...");
 
     let bot = Bot::from_env();
-    let handler = dptree::entry()
-        .branch(Update::filter_message().endpoint(message_handler))
-        .branch(Update::filter_callback_query().endpoint(callback_handler));
 
-    let state = std::sync::Arc::new(tokio::sync::Mutex::new(ChatState::new()));
+    let addr = SocketAddr::from(([0, 0, 0, 0], 8080));
+    let url = Url::parse(&env::var("WEBHOOK_URL").expect("WEBHOOK_URL must be set")).unwrap();
+
+    let listener = webhooks::axum(bot.clone(), Options::new(addr, url)).await.unwrap();
+
+    let handler: UpdateHandler<teloxide::RequestError> = dptree::entry()
+    .branch(Update::filter_message().endpoint(message_handler))
+    .branch(Update::filter_callback_query().endpoint(callback_handler));
 
     Dispatcher::builder(bot, handler)
-        .dependencies(dptree::deps![state])
-        .enable_ctrlc_handler()
-        .build()
-        .dispatch()
-        .await;
+    .enable_ctrlc_handler()
+    .build()
+    .dispatch_with_listener(listener, LoggingErrorHandler::with_custom_text("Ошибка в боте"))
+    .await;
 }
 
 fn main_keyboard() -> InlineKeyboardMarkup {
@@ -53,7 +66,8 @@ async fn message_handler(
     if let Some(text) = msg.text() {
         if text == "/start" {
             let mut state = state.lock().await;
-            // Очищаем предыдущие сообщения
+
+            // Удаление старых сообщений
             if let Some(ids) = state.get(&msg.chat.id) {
                 for &id in ids {
                     let _ = bot.delete_message(msg.chat.id, id).await;
@@ -61,28 +75,30 @@ async fn message_handler(
             }
             state.insert(msg.chat.id, Vec::new());
 
+            // Отправляем баннер (если есть)
+            let banner_path = Path::new("assets/welcome.jpg");
+            if banner_path.exists() {
+                let photo = InputFile::file(banner_path);
+                let banner = bot.send_photo(msg.chat.id, photo).await?;
+                state.get_mut(&msg.chat.id).unwrap().push(banner.id);
+            }
+
+            // Текст приветствия
+            let welcome_text = "Привет, друг!  
+Ты оказался в ReMind-архиве — месте, где мы собираем книги, исчезнувшие с полок, но не из памяти.
+
+В этом боте ты сможешь:  
+1. 📚 Приобрести свою книгу.  
+2. 🕵️‍♂️ Открой то, что прячут.
+
+Нажимай на кнопку ниже и наслаждайся книгами ⬇️";
+
             let keyboard = InlineKeyboardMarkup::new(vec![vec![
-                InlineKeyboardButton::callback("Да, я готов", "ready"),
+                InlineKeyboardButton::callback("📂 Перейти к книгам", "ready"),
             ]]);
 
-            let sent_msg = bot.send_message(msg.chat.id, "🔒 Добро пожаловать в тень.
-
-Тут не рассказывают сказки.  
-Тут находят то, что спрятали.  
-То, что не одобрили сверху.  
-То, что нельзя было читать.
-
-Мы сохраняем книги, которые исчезли.
-
-🕳️ Их нельзя купить на Ozon.  
-🧯 Их удаляют с форумов.  
-📛 Их называют «опасными».
-
-📚 Сейчас доступны 2 таких книги.  
-Но прежде чем ты их увидишь…
-
-👁 Ответь: ты готов читать то,  
-что меняет мышление необратимо?")
+            let sent_msg = bot
+                .send_message(msg.chat.id, welcome_text)
                 .reply_markup(keyboard)
                 .await?;
 
@@ -156,7 +172,7 @@ async fn callback_handler(
             "book2" => {
                 bot.answer_callback_query(q.id).await?;
                 let sent_msg = bot.send_message(chat_id, 
-                    "📙 Код Денег\n\
+              "📙 Код Денег\n\
                     💰 Эту книгу удалили с форумов. Почему — не говорят.\n\n\
                     📌 Что внутри:\n\
                     – Психология бедности\n\
@@ -165,7 +181,8 @@ async fn callback_handler(
                     – Как твои установки управляют твоим счётом\n\n\
                     📄 Формат: PDF\n\
                     ⏱ Объём: ~70 стр\n\
-                    📛 Не для публичного доступа. Только здесь.")
+                    📛 Не для публичного доступа. Только здесь."
+                   )
                     .reply_markup(back_keyboard())
                     .await?;
                 state.get_mut(&chat_id).unwrap().push(sent_msg.id);

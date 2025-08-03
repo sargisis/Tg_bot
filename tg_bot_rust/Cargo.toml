@@ -2,13 +2,16 @@
 name = "tg_bot_rust"
 version = "0.1.0"
 edition = "2024"
+include = ["src/**", "books/**", "Cargo.toml", "Cargo.lock", "README.md"]
 
 [dependencies]
-teloxide = { version = "0.12", features = ["auto-send"] }
-tokio = { version = "1.0", features = ["full"] }
+teloxide = { version = "0.12", features = ["auto-send", "webhooks", "webhooks-axum"] }
+tokio = { version = "1.0", features = ["rt-multi-thread", "macros"] }
 pretty_env_logger = "0.5"
 dotenv = "0.15"
 log = "0.4"
 reqwest = { version = "0.11", features = ["json"] }
 lazy_static = "1.4"
 serde_json = "1.0"
+axum = "0.6"         # <-- добавь это
+url = "2.5"
